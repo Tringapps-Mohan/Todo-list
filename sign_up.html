@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+    <style>
+        #backend{
+            position: relative;
+            top:40vh;
+        }
+    </style>
+</head>
+<body>
+    <center>
+    <div id="backend">
+        <div id="forsignup">
+            <form action="Todu_list.html" method="post" onsubmit="return saveit()">
+            <label for="uname">Enter username:</label>
+            <input type="text" class="inps_of_users" id="uname" name="username" placeholder="username" required>
+            <br>
+            <br>
+            <label for="upass">Enter a password:</label>
+            <input type="password" class="inps_of_users" id="upass" name="userpassword" placeholder="password" required>
+            <br>
+            <br>
+            <button type="submit">sign up</button>
+            <br>
+            <br>               
+        </form>
+        </div>
+    </div>
+</center>
+    <script>
+        function saveit(){
+            let uname=document.getElementById("uname").value;
+            let upass=document.getElementById("upass").value;
+            if(localStorage.getItem(uname)==null){
+                let obj={
+                    name:uname,
+                    password:upass,
+                    savedContent:""
+                };
+                localStorage.setItem(uname,JSON.stringify(obj));
+                console.log(JSON.stringify(obj));
+                localStorage.setItem("usernow",uname);
+                return true;
+            }else{
+                alert("Try another username!");
+                return false;
+            }
+        }
+
+    </script>
+</body>
+</html>

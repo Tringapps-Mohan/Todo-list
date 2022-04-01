@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in</title>
+    <style>
+        #box{
+            position: relative;
+            top:40vh;
+        }
+    </style>
+</head>
+<body>
+    <center>
+<div id="box">
+    <form action="Todu_list.html" onsubmit="return sign_in()" method="post">
+    <label for="uname">Enter username:</label>
+    <input type="text" id="uname" placeholder="username" required>
+    <br>
+    <br>
+    <label for="upass">Enter password:</label>
+    <input type="password" id="upass" placeholder="password" required>
+    <br>
+    <br>
+    <button type="submit" >Sign in</button>
+    </form>
+    <a href="sign_up.html" target="_self">Are you a new user?</a>
+</div>
+</center>    
+<script>
+    function sign_in(){
+        let uname=document.getElementById("uname").value;
+        let upass=document.getElementById("upass").value;
+        let val=localStorage.getItem(uname);
+        if(val!=null){
+            let obj=JSON.parse(val);
+            if(obj["password"]==upass){
+                localStorage.setItem("usernow",uname);
+                alert("correct!");
+                return true;
+            }else{
+                alert("Wrong password!");
+                return false;
+            }
+        }else{
+            alert("Check your user name!");
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

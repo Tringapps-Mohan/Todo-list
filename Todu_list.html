@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do List</title>
+
+    <style>
+        #outer{
+            box-shadow: 0px 0px 8px 2px grey;
+            border-radius: 10%;
+            position: absolute;
+            top: 10vh;
+            left: 25vw;
+            padding: 5vw;
+
+        }
+        #hd{
+            font-size: 2vw;
+            font-weight: bolder;
+            text-shadow: 2px 2px 4px orange;
+        }
+        .bots{
+            background-color:limegreen;
+            border: 2px solid lightgreen;
+            border-radius: 10%;
+            box-shadow: 0px 0px 8px 2px lawngreen;
+        }
+        .bots,#no_of_items{
+            padding: 0.5vw;
+            color:red;
+        }
+        .bots:hover{
+            box-shadow: 0px 0px 8px 2px yellow;
+        }
+        #list{
+            height: 40vh;
+            width: 20vw;
+            overflow: scroll;
+        }
+        #add{
+            float: right;
+        }
+        .message{
+            font-weight: bolder;
+        }
+        #no_of_items:focus{
+
+            box-shadow: 0px 0px 8px 2px lawngreen;
+        }
+    </style>
+</head>
+<body>
+    <div id="outer">
+        <div id="innerdiv">
+            <div id="hd">My to-do List</div>
+            <br>
+            <br>
+            <div>
+                <input type="text" id="no_of_items">
+                <button id="add" class="bots" onclick="additem()">Add</button>
+            </div>
+            <br>
+            <br>
+            <div id="list">
+
+            </div>
+            <br>
+            <br>
+            <button class="bots" id="clear" onclick="clearcompleted()">Clear complete</button>&nbsp;&nbsp;
+            <button class="bots" id="empty" onclick="clearall()">Empty list</button>&nbsp;&nbsp;
+            <button class="bots" id="save" onclick="saveall()">Save list</button>
+        </div>
+    </div>
+    <script>
+        let last_saved="";
+        window.onload=function(){
+            let usernow=localStorage.getItem("usernow");
+            let obj=JSON.parse(localStorage.getItem(usernow));
+            if((obj).content!=undefined){
+                console.log(obj);
+                document.getElementById("list").innerHTML=(obj).content;
+            }
+        };
+        
+        function additem(){
+            let newthing=document.getElementById("no_of_items");
+            let list=document.getElementById("list");
+            let addit=document.createElement("div");
+            addit.classList.add("items");
+            addit.innerHTML+=`<p class="message" ondblclick="complete(this)">${newthing.value}</p>`;
+            list.innerHTML+=addit.outerHTML;
+        }
+        function complete(el){
+            if(el.style.textDecoration!="line-through")
+            el.style.textDecoration="line-through";
+            else
+            el.style.textDecoration="none";
+        }
+
+        function clearcompleted(){
+            let added_items=document.getElementsByClassName("message");
+            [...added_items].forEach(x=>{
+                if(x.style.textDecoration=="line-through"){
+                    x.parentNode.removeChild(x);
+                }
+            });
+        }
+
+        function clearall(){
+            document.getElementById("list").innerHTML="";
+        }
+        
+        function saveall(){
+            let uname=localStorage.getItem("usernow");
+            let getuser=localStorage.getItem(uname);
+            let user=JSON.parse(getuser);
+            user.content=document.getElementById("list").innerHTML;
+            last_saved=user.content;
+            localStorage.setItem(uname,JSON.stringify(user));
+        }
+    </script>
+</body>
+</html>
+<!--
+    window.onbeforeunload = function (e) {
+    e = e || window.event;
+
+    // For IE and Firefox prior to version 4
+    if (e) {
+        e.returnValue = 'Sure?';
+    }
+
+    // For Safari
+    return 'Sure?';
+};
+-->
