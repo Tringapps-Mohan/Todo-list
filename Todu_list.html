@@ -89,8 +89,10 @@
             let list=document.getElementById("list");
             let addit=document.createElement("div");
             addit.classList.add("items");
+            if(newthing.value!=""){
             addit.innerHTML+=`<p class="message" ondblclick="complete(this)">${newthing.value}</p>`;
             list.innerHTML+=addit.outerHTML;
+            }
         }
         function complete(el){
             if(el.style.textDecoration!="line-through")
